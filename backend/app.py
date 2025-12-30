@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import smtplib
 from email.message import EmailMessage
 from typing import Dict, List, Optional
@@ -7,7 +10,10 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from sqlalchemy import JSON, Column, Integer, MetaData, String, Table, Text, create_engine, select, text as sql_text
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///contact.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
+
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
 EMAIL_USER = os.getenv("EMAIL_USER")
@@ -15,7 +21,7 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_TO = os.getenv("EMAIL_TO")
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "true").lower() == "true"
 
-# Single engine/metadata for Postgres on Render (or SQLite locally as fallback)
+# Single engine/metadata for Postgres
 engine = create_engine(DATABASE_URL, future=True)
 metadata = MetaData()
 

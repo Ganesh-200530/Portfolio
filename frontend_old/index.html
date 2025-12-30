@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-api-base="http://127.0.0.1:5000">
+  <div id="loader" class="loader" aria-label="Loading portfolio">
+    <div class="loader__bars">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p class="loader__text">booting portfolio...</p>
+  </div>
+  <div class="particle-field" aria-hidden="true"></div>
+  <!-- Parallax dots removed per request -->
+  <div class="code-glyphs" aria-hidden="true">
+    <span>{}</span><span>SELECT</span><span>JOIN</span><span>lambda</span><span>def</span><span>%%</span><span>GROUP BY</span><span>//</span>
+    <span>async</span><span>await</span><span>map()</span><span>reduce()</span><span>forEach</span><span>try{}</span><span>ON CONFLICT</span><span>coalesce()</span>
+  </div>
+  <div class="page">
+    <header class="nav">
+      <div class="brand">ganesh.exe</div>
+      <nav>
+        <a href="#hero">Home</a>
+        <a href="#education">Education</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+        <a href="#social">Social</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" class="section hero glass-card reveal">
+        <div class="hero__content">
+          <p class="eyebrow">Aspiring Data Analyst
+</p>
+          <h1><span class="accent name">M GANESH</span><br /><span class="role">DATA ANALYST</span></h1>
+          <p class="lede">I analyze data to uncover patterns, build dashboards, and deliver insights that support informed decision-making.</p>
+          <div class="hero__cta">
+            <div class="cta-buttons">
+              <a class="button ghost" href="#projects">View Projects</a>
+              <a class="button ghost" href="https://drive.google.com/file/d/13Mva4f5emE1n1u02vJYwjmRSvVWRwukH/view?usp=drive_link" target="_blank" rel="noreferrer">Resume</a>
+            </div>
+          </div>
+          <div class="hero__metrics">
+            <div class="metric">
+              <span class="metric__label">Data Projects</span>
+              <span class="metric__value">15 +</span>
+              <div class="spark spark--blue" aria-hidden="true"></div>
+            </div>
+            <div class="metric">
+              <span class="metric__label">Dashboards Delivered
+              </span>
+              <span class="metric__value">5 +</span>
+              <div class="spark spark--teal" aria-hidden="true"></div>
+            </div>
+            <div class="metric">
+              <span class="metric__label">Insights Generated</span>
+              <span class="metric__value">20 +</span>
+              <div class="spark spark--amber" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="orb"></div>
+          <div class="hero__photo" aria-label="Profile photo">
+            <img src="Profile_P.jpeg" alt="Portrait of M Ganesh" />
+          </div>
+        </div>
+      </section>
+
+      <section id="education" class="section">
+        <div class="glass-card two-col reveal">
+          <div class="section__title">
+            <p class="eyebrow">Education</p>
+            <h2>Learning Journey</h2>
+          </div>
+          <div class="section__body">
+            <div class="code-card">
+              <div class="code-card__header">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+                <span class="code-card__title">sql • education</span>
+              </div>
+              <div class="code-card__body">
+                    <div class="code-table" id="education-list">
+                      <p class="muted">Loading education...</p>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="glass-card two-col reveal">
+          <div class="section__title">
+            <p class="eyebrow">Skills & Tools</p>
+            <h2>What I Use</h2>
+          </div>
+          <div class="section__body skills">
+            <div id="skills-list">
+              <p class="muted">Loading skills...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="glass-card reveal">
+          <div class="section__title">
+            <p class="eyebrow">Projects</p>
+            <h2>Selected Work</h2>
+          </div>
+          <div class="data-stripe" aria-hidden="true"></div>
+          <div class="cards" id="projects-list">
+            <p class="muted">Loading projects...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="certifications" class="section">
+        <div class="glass-card reveal">
+          <div class="section__title">
+            <p class="eyebrow">Certifications</p>
+            <h2>Credentials</h2>
+          </div>
+          <div class="cards" id="certifications-list">
+            <p class="muted">Loading certifications...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="glass-card two-col contact reveal">
+          <div class="section__title">
+            <p class="eyebrow">Contact</p>
+            <h2>Let’s Talk</h2>
+          </div>
+          <div class="section__body full">
+            <form id="contact-form" class="form">
+              <label>
+                <span>Name</span>
+                <input type="text" name="name" required />
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" required />
+              </label>
+              <label>
+                <span>Message</span>
+                <textarea name="message" rows="4" required></textarea>
+              </label>
+              <button type="submit" class="button primary">Send</button>
+              <p class="form__status" id="form-status"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="social" class="section">
+        <div class="glass-card social reveal">
+          <div class="section__title">
+            <p class="eyebrow">Social Links</p>
+            <h2>Connect With Me</h2>
+          </div>
+          <div class="social__links" id="social-links">
+            <p class="muted">Loading social links...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Driven by data. Guided by curiosity.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

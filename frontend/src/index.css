@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #000000;
+    --card: #0d1117;
+    --muted: #8496ad;
+    --text: #dfe7f2;
+    --accent: #C3E41D; /* Matching the new hero accent */
+    --accent-2: #4a88cf;
+    --border: rgba(255, 255, 255, 0.06);
+  }
+
+  /* .dark class is no longer needed as root is dark by default, but keeping it for compatibility if needed */
+  .dark {
+    --bg: #000000;
+    --card: #0d1117;
+    --muted: #8496ad;
+    --text: #dfe7f2;
+    --accent: #C3E41D;
+    --accent-2: #4a88cf;
+    --border: rgba(255, 255, 255, 0.06);
+  }
+
+  body {
+    @apply font-sans min-h-screen leading-relaxed m-0;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Custom scrollbar if needed, or other base styles */
+}
+
