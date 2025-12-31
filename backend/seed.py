@@ -1,6 +1,6 @@
 import logging
 from sqlalchemy import insert, text
-from app import engine, init_db, education, projects, skills, certifications, social_links
+from app import engine, init_db, education, projects, skills, certifications, social_links, users
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,6 +16,14 @@ def seed_data():
         conn.execute(text("DELETE FROM skills"))
         conn.execute(text("DELETE FROM certifications"))
         conn.execute(text("DELETE FROM social_links"))
+        conn.execute(text("DELETE FROM users"))
+        conn.commit()
+        
+        logger.info("Seeding admin user...")
+        conn.execute(users.insert().values(
+            username="ganesh",
+            password="Ganesh@2805"
+        ))
         conn.commit()
 
         logger.info("Seeding education...")

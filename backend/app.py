@@ -93,6 +93,14 @@ social_links = Table(
   Column("order_index", Integer, server_default="0"),
 )
 
+users = Table(
+  "users",
+  metadata,
+  Column("id", Integer, primary_key=True),
+  Column("username", String(255), unique=True, nullable=False),
+  Column("password", String(255), nullable=False),
+)
+
 
 def init_db() -> None:
   metadata.create_all(engine)
@@ -133,7 +141,6 @@ def create_app() -> Flask:
   init_db()
 
   app.secret_key = os.getenv("SECRET_KEY", "supersecretkey")
-  ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
 
   def login_required(f):
       @wraps(f)
@@ -146,10 +153,16 @@ def create_app() -> Flask:
   @app.route('/admin/login', methods=['GET', 'POST'])
   def login():
       if request.method == 'POST':
-          if request.form['password'] == ADMIN_PASSWORD:
+          username = request.form['username']
+          password = request.form['password']
+          
+          with engine.connect() as conn:
+              user = conn.execute(select(users).where(users.c.username == username)).mappings().first()
+          
+          if user and user.password == password:
               session['logged_in'] = True
               return redirect(url_for('admin_dashboard'))
-          flash('Invalid password')
+          flash('Invalid username or password')
       return render_template('login.html')
 
   @app.route('/admin/logout')
