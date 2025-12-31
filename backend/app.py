@@ -334,13 +334,13 @@ def create_app() -> Flask:
   @app.get("/api/social")
   def get_social():
     return jsonify(rows_for(social_links))
-@app.get("/api/profile")
+
+  @app.get("/api/profile")
   def get_profile():
     with engine.connect() as conn:
         row = conn.execute(select(profile)).mappings().first()
     return jsonify(dict(row) if row else {})
 
-  
   return app
 
 app = create_app()
