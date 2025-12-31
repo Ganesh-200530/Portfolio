@@ -5,7 +5,7 @@ const Hero: React.FC = () => {
   const [resumeUrl, setResumeUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    api.getProfile().then(data => {
+    api.getProfile().then((data: any) => {
       if (data.resume_data) {
         setResumeUrl(data.resume_data);
       }

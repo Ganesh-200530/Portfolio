@@ -37,6 +37,12 @@ export const api = {
     return response.json();
   },
 
+  getProfile: async () => {
+    const response = await fetch(`${API_BASE_URL}/profile`);
+    if (!response.ok) throw new Error('Failed to fetch profile');
+    return response.json();
+  },
+
   sendMessage: async (data: Record<string, any>) => {
     const response = await fetch(`${API_BASE_URL}/contact`, {
       method: 'POST',

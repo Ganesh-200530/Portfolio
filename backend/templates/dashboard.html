@@ -1,12 +1,113 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>Dashboard</h2>
-<div class="list-group">
-    <a href="/admin/education" class="list-group-item list-group-item-action">Education</a>
-    <a href="/admin/projects" class="list-group-item list-group-item-action">Projects</a>
-    <a href="/admin/skills" class="list-group-item list-group-item-action">Skills</a>
-    <a href="/admin/certifications" class="list-group-item list-group-item-action">Certifications</a>
-    <a href="/admin/social_links" class="list-group-item list-group-item-action">Social Links</a>
-    <a href="/admin/messages" class="list-group-item list-group-item-action">Messages</a>
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-3">Dashboard</h2>
+        <p class="text-muted">Manage your portfolio content from here.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Education -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-primary">
+            <div class="card-body text-center">
+                <div class="dashboard-icon text-primary">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <h5 class="card-title">Education</h5>
+                <p class="card-text text-muted">Manage your academic background.</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/education" class="btn btn-outline-primary">View All</a>
+                    <a href="/admin/education/add" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-success">
+            <div class="card-body text-center">
+                <div class="dashboard-icon text-success">
+                    <i class="bi bi-code-slash"></i>
+                </div>
+                <h5 class="card-title">Projects</h5>
+                <p class="card-text text-muted">Showcase your work and code.</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/projects" class="btn btn-outline-success">View All</a>
+                    <a href="/admin/projects/add" class="btn btn-success"><i class="bi bi-plus-lg"></i> Add New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-info">
+            <div class="card-body text-center">
+                <div class="dashboard-icon text-info">
+                    <i class="bi bi-lightning-fill"></i>
+                </div>
+                <h5 class="card-title">Skills</h5>
+                <p class="card-text text-muted">Update your technical expertise.</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/skills" class="btn btn-outline-info">View All</a>
+                    <a href="/admin/skills/add" class="btn btn-info text-white"><i class="bi bi-plus-lg"></i> Add New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-warning">
+            <div class="card-body text-center">
+                <div class="dashboard-icon text-warning">
+                    <i class="bi bi-award-fill"></i>
+                </div>
+                <h5 class="card-title">Certifications</h5>
+                <p class="card-text text-muted">List your achievements and awards.</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/certifications" class="btn btn-outline-warning">View All</a>
+                    <a href="/admin/certifications/add" class="btn btn-warning text-white"><i class="bi bi-plus-lg"></i> Add New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Links -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-secondary">
+            <div class="card-body text-center">
+                <div class="dashboard-icon text-secondary">
+                    <i class="bi bi-share-fill"></i>
+                </div>
+                <h5 class="card-title">Social Links</h5>
+                <p class="card-text text-muted">Manage your social media profiles.</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/social_links" class="btn btn-outline-secondary">View All</a>
+                    <a href="/admin/social_links/add" class="btn btn-secondary"><i class="bi bi-plus-lg"></i> Add New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-danger">
+            <div class="card-body text-center">
+                <div class="dashboard-icon text-danger">
+                    <i class="bi bi-envelope-fill"></i>
+                </div>
+                <h5 class="card-title">Messages</h5>
+                <p class="card-text text-muted">Read messages from your contact form.</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/messages" class="btn btn-outline-danger">View All</a>
+                    <a href="/admin/messages" class="btn btn-danger"><i class="bi bi-eye"></i> Read Messages</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
