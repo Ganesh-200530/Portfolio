@@ -241,7 +241,7 @@ export default function PortfolioHero() {
 
         {/* Tagline - Proper Distance Below Hero */}
         <div className="absolute bottom-16 sm:bottom-20 md:bottom-24 lg:bottom-32 xl:bottom-36 left-1/2 -translate-x-1/2 w-full px-6">
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center gap-6">
             <BlurText
               text="Aspiring Data Analyst | Uncovering patterns in data."
               delay={150}
@@ -250,6 +250,17 @@ export default function PortfolioHero() {
               className="text-[15px] sm:text-[18px] md:text-[20px] lg:text-[22px] text-center transition-colors duration-300 text-neutral-500 hover:text-white"
               style={{ fontFamily: "'Antic', sans-serif" }}
             />
+            {resumeUrl && (
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="px-6 py-2 rounded-full border border-[#C3E41D] text-[#C3E41D] hover:bg-[#C3E41D] hover:text-black transition-all duration-300 font-medium tracking-wide text-sm sm:text-base"
+                style={{ fontFamily: "'Fira Code', monospace" }}
+              >
+                RESUME
+              </a>
+            )}
           </div>
         </div>
 
