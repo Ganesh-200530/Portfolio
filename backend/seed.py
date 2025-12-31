@@ -1,23 +1,19 @@
 import logging
 from sqlalchemy import insert, text
-from app import engine, init_db, education, projects, skills, certifications, social_links, users
+from app import engine, init_db, metadata, education, projects, skills, certifications, social_links, users
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def seed_data():
-    logger.info("Initializing database...")
-    init_db()
+    logger.info("Dropping existing tables to ensure schema update...")
+    metadata.drop_all(engine)
+    
+    logger.info("Creating tables...")
+    metadata.create_all(engine)
 
     with engine.connect() as conn:
-        logger.info("Clearing existing data...")
-        conn.execute(text("DELETE FROM education"))
-        conn.execute(text("DELETE FROM projects"))
-        conn.execute(text("DELETE FROM skills"))
-        conn.execute(text("DELETE FROM certifications"))
-        conn.execute(text("DELETE FROM social_links"))
-        conn.execute(text("DELETE FROM users"))
-        conn.commit()
+        logger.info("Seeding data...")
         
         logger.info("Seeding admin user...")
         conn.execute(users.insert().values(
