@@ -338,7 +338,7 @@ def create_app() -> Flask:
   @app.get("/api/profile")
   def get_profile():
     with engine.connect() as conn:
-        row = conn.execute(select(profile)).mappings().first()
+      row = conn.execute(select(profile)).mappings().first()
     return jsonify(dict(row) if row else {})
 
   return app
