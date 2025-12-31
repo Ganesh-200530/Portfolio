@@ -7,6 +7,7 @@ interface ProjectItem {
   title: string;
   summary: string;
   tags: string[] | string;
+  image?: string;
   live_url?: string;
   code_url?: string;
 }
@@ -57,7 +58,7 @@ const Projects: React.FC = () => {
           <ContainerScroll className="min-h-[200vh] py-12">
             {projects.map((item, index) => {
               const tags = Array.isArray(item.tags) ? item.tags : [item.tags];
-              const imageUrl = projectImages[index % projectImages.length];
+              const imageUrl = item.image || projectImages[index % projectImages.length];
               
               return (
                 <CardSticky

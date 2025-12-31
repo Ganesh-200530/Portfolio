@@ -58,6 +58,7 @@ projects = Table(
   Column("title", String(255), nullable=False),
   Column("summary", Text),
   Column("tags", JSON),
+  Column("image", Text),
   Column("live_url", String(1024)),
   Column("code_url", String(1024)),
   Column("order_index", Integer, server_default="0"),

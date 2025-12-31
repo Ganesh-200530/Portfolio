@@ -11,6 +11,14 @@
             {% elif col == 'items' or col == 'tags' %}
                 <input type="text" name="{{ col }}" class="form-control" value="{{ row[col]|join(', ') if row and row[col] else '' }}" placeholder="React, Python, JavaScript">
                 <div class="form-text">Enter items separated by commas</div>
+            {% elif col == 'image' %}
+                <input type="file" class="form-control mb-2" onchange="encodeImage(this, '{{ col }}')">
+                <input type="hidden" name="{{ col }}" id="{{ col }}" value="{{ row[col] if row else '' }}">
+                <div id="preview-{{ col }}">
+                    {% if row and row[col] %}
+                        <img src="{{ row[col] }}" style="max-height: 100px; margin-top: 5px;">
+                    {% endif %}
+                </div>
             {% else %}
                 <input type="text" name="{{ col }}" class="form-control" value="{{ row[col] if row else '' }}">
             {% endif %}
@@ -20,4 +28,17 @@
     <button type="submit" class="btn btn-primary">Save</button>
     <a href="/admin/{{ table_name }}" class="btn btn-secondary">Cancel</a>
 </form>
+
+<script>
+function encodeImage(input, targetId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById(targetId).value = e.target.result;
+            document.getElementById('preview-' + targetId).innerHTML = '<img src="' + e.target.result + '" style="max-height: 100px; margin-top: 5px;">';
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 {% endblock %}
