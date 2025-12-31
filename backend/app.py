@@ -6,7 +6,10 @@ import smtplib
 from email.message import EmailMessage
 from typing import Dict, List, Optional
 
-from flask import Flask, jsonify, request
+import json
+from functools import wraps
+from flask import Flask, jsonify, request, render_template, redirect, url_for, session, flash
+
 from flask_cors import CORS
 from sqlalchemy import JSON, Column, Integer, MetaData, String, Table, Text, create_engine, select, text as sql_text
 
@@ -128,6 +131,146 @@ def create_app() -> Flask:
   CORS(app)
 
   init_db()
+
+  app.secret_key = os.getenv("SECRET_KEY", "supersecretkey")
+  ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
+
+  def login_required(f):
+      @wraps(f)
+      def decorated_function(*args, **kwargs):
+          if not session.get('logged_in'):
+              return redirect(url_for('login', next=request.url))
+          return f(*args, **kwargs)
+      return decorated_function
+
+  @app.route('/admin/login', methods=['GET', 'POST'])
+  def login():
+      if request.method == 'POST':
+          if request.form['password'] == ADMIN_PASSWORD:
+              session['logged_in'] = True
+              return redirect(url_for('admin_dashboard'))
+          flash('Invalid password')
+      return render_template('login.html')
+
+  @app.route('/admin/logout')
+  def logout():
+      session.pop('logged_in', None)
+      return redirect(url_for('login'))
+
+  @app.route('/admin')
+  @login_required
+  def admin_dashboard():
+      return render_template('dashboard.html')
+
+  tables = {
+      'education': education,
+      'projects': projects,
+      'skills': skills,
+      'certifications': certifications,
+      'social_links': social_links,
+      'messages': messages
+  }
+
+  @app.route('/admin/<table_name>')
+  @login_required
+  def admin_table(table_name):
+      if table_name not in tables:
+          return "Table not found", 404
+      
+      table = tables[table_name]
+      columns = [c.name for c in table.columns]
+      
+      with engine.connect() as conn:
+          result = conn.execute(select(table).order_by(table.c.id.desc())).mappings().all()
+      
+      return render_template('table.html', table_name=table_name, columns=columns, rows=result)
+
+  @app.route('/admin/<table_name>/add', methods=['GET', 'POST'])
+  @login_required
+  def admin_add(table_name):
+      if table_name not in tables:
+          return "Table not found", 404
+      
+      table = tables[table_name]
+      columns = [c.name for c in table.columns]
+      
+      if request.method == 'POST':
+          data = {}
+          for col in columns:
+              if col in request.form and col != 'id' and col != 'created_at':
+                  val = request.form[col]
+                  if col in ['items', 'tags']:
+                      try:
+                          val = json.loads(val) if val else None
+                      except json.JSONDecodeError:
+                          flash(f'Invalid JSON for {col}')
+                          return render_template('form.html', table_name=table_name, columns=columns, row=None, action="Add")
+                  
+                  if table.columns[col].type.python_type == int and val:
+                      val = int(val)
+                  
+                  data[col] = val
+          
+          with engine.begin() as conn:
+              conn.execute(table.insert().values(**data))
+          
+          flash('Added successfully')
+          return redirect(url_for('admin_table', table_name=table_name))
+
+      return render_template('form.html', table_name=table_name, columns=columns, row=None, action="Add")
+
+  @app.route('/admin/<table_name>/edit/<int:id>', methods=['GET', 'POST'])
+  @login_required
+  def admin_edit(table_name, id):
+      if table_name not in tables:
+          return "Table not found", 404
+      
+      table = tables[table_name]
+      columns = [c.name for c in table.columns]
+      
+      with engine.connect() as conn:
+          row = conn.execute(select(table).where(table.c.id == id)).mappings().first()
+      
+      if not row:
+          return "Row not found", 404
+
+      if request.method == 'POST':
+          data = {}
+          for col in columns:
+              if col in request.form and col != 'id' and col != 'created_at':
+                  val = request.form[col]
+                  if col in ['items', 'tags']:
+                      try:
+                          val = json.loads(val) if val else None
+                      except json.JSONDecodeError:
+                          flash(f'Invalid JSON for {col}')
+                          return render_template('form.html', table_name=table_name, columns=columns, row=row, action="Edit")
+                  
+                  if table.columns[col].type.python_type == int and val:
+                      val = int(val)
+                  
+                  data[col] = val
+          
+          with engine.begin() as conn:
+              conn.execute(table.update().where(table.c.id == id).values(**data))
+          
+          flash('Updated successfully')
+          return redirect(url_for('admin_table', table_name=table_name))
+
+      return render_template('form.html', table_name=table_name, columns=columns, row=row, action="Edit")
+
+  @app.route('/admin/<table_name>/delete/<int:id>', methods=['POST'])
+  @login_required
+  def admin_delete(table_name, id):
+      if table_name not in tables:
+          return "Table not found", 404
+      
+      table = tables[table_name]
+      with engine.begin() as conn:
+          conn.execute(table.delete().where(table.c.id == id))
+      
+      flash('Deleted successfully')
+      return redirect(url_for('admin_table', table_name=table_name))
 
   @app.get("/health")
   def health():

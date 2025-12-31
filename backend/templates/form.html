@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>{{ action }} {{ table_name|title }}</h2>
+<form method="post">
+    {% for col in columns %}
+        {% if col != 'id' and col != 'created_at' %}
+        <div class="mb-3">
+            <label class="form-label">{{ col|title }}</label>
+            {% if col == 'message' or col == 'details' or col == 'summary' %}
+                <textarea name="{{ col }}" class="form-control" rows="3">{{ row[col] if row else '' }}</textarea>
+            {% elif col == 'items' or col == 'tags' %}
+                <input type="text" name="{{ col }}" class="form-control" value="{{ row[col]|tojson if row and row[col] else '' }}" placeholder='["item1", "item2"]'>
+                <div class="form-text">Enter as JSON array e.g. ["React", "Python"]</div>
+            {% else %}
+                <input type="text" name="{{ col }}" class="form-control" value="{{ row[col] if row else '' }}">
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="/admin/{{ table_name }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
