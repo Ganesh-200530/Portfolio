@@ -102,6 +102,13 @@ users = Table(
   Column("password", String(255), nullable=False),
 )
 
+profile = Table(
+  "profile",
+  metadata,
+  Column("id", Integer, primary_key=True),
+  Column("resume_data", Text),
+)
+
 
 def init_db() -> None:
   metadata.create_all(engine)
@@ -186,7 +193,8 @@ def create_app() -> Flask:
       'skills': skills,
       'certifications': certifications,
       'social_links': social_links,
-      'messages': messages
+      'messages': messages,
+      'profile': profile
   }
 
   @app.route('/admin/<table_name>')
@@ -326,7 +334,13 @@ def create_app() -> Flask:
   @app.get("/api/social")
   def get_social():
     return jsonify(rows_for(social_links))
+@app.get("/api/profile")
+  def get_profile():
+    with engine.connect() as conn:
+        row = conn.execute(select(profile)).mappings().first()
+    return jsonify(dict(row) if row else {})
 
+  
   return app
 
 app = create_app()

@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { api } from '../services/api';
 
 const Hero: React.FC = () => {
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    api.getProfile().then(data => {
+      if (data.resume_data) {
+        setResumeUrl(data.resume_data);
+      }
+    }).catch(console.error);
+  }, []);
+
   return (
     <section id="hero" className="min-h-[85vh] flex flex-col lg:flex-row items-center justify-center lg:justify-between px-6 lg:px-16 pt-24 lg:pt-0 relative overflow-hidden reveal gap-10 lg:gap-0">
       <div className="max-w-[600px] z-10 flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -15,7 +26,9 @@ const Hero: React.FC = () => {
         <div className="mb-16">
           <div className="flex gap-4">
             <a className="bg-white/5 border border-border text-site-text hover:bg-white/10 hover:border-accent hover:-translate-y-0.5 transition-all duration-300 px-6 py-3 rounded-lg" href="#projects">View Projects</a>
-            <a className="bg-white/5 border border-border text-site-text hover:bg-white/10 hover:border-accent hover:-translate-y-0.5 transition-all duration-300 px-6 py-3 rounded-lg" href="https://drive.google.com/file/d/13Mva4f5emE1n1u02vJYwjmRSvVWRwukH/view?usp=drive_link" target="_blank" rel="noreferrer">Resume</a>
+            {resumeUrl && (
+              <a className="bg-white/5 border border-border text-site-text hover:bg-white/10 hover:border-accent hover:-translate-y-0.5 transition-all duration-300 px-6 py-3 rounded-lg" href={resumeUrl} target="_blank" rel="noreferrer">Resume</a>
+            )}
           </div>
         </div>
         <div className="flex flex-wrap justify-center lg:justify-start gap-10 border-t border-border pt-8 w-full">

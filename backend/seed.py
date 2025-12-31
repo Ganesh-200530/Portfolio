@@ -1,6 +1,7 @@
 import logging
 from sqlalchemy import insert, text
-from app import engine, init_db, metadata, education, projects, skills, certifications, social_links, users
+from app import engine, init_db, metadata, education, projects, skills, certifications, social_links, users, profile
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

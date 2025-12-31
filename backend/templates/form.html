@@ -11,12 +11,16 @@
             {% elif col == 'items' or col == 'tags' %}
                 <input type="text" name="{{ col }}" class="form-control" value="{{ row[col]|join(', ') if row and row[col] else '' }}" placeholder="React, Python, JavaScript">
                 <div class="form-text">Enter items separated by commas</div>
-            {% elif col == 'image' %}
+            {% elif col == 'image' or col == 'resume_data' %}
                 <input type="file" class="form-control mb-2" onchange="encodeImage(this, '{{ col }}')">
                 <input type="hidden" name="{{ col }}" id="{{ col }}" value="{{ row[col] if row else '' }}">
                 <div id="preview-{{ col }}">
                     {% if row and row[col] %}
-                        <img src="{{ row[col] }}" style="max-height: 100px; margin-top: 5px;">
+                        {% if col == 'image' %}
+                            <img src="{{ row[col] }}" style="max-height: 100px; margin-top: 5px;">
+                        {% else %}
+                            <a href="{{ row[col] }}" target="_blank" class="btn btn-sm btn-info mt-2">View Current File</a>
+                        {% endif %}
                     {% endif %}
                 </div>
             {% else %}
@@ -35,7 +39,11 @@ function encodeImage(input, targetId) {
         var reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById(targetId).value = e.target.result;
-            document.getElementById('preview-' + targetId).innerHTML = '<img src="' + e.target.result + '" style="max-height: 100px; margin-top: 5px;">';
+            if (targetId === 'image') {
+                document.getElementById('preview-' + targetId).innerHTML = '<img src="' + e.target.result + '" style="max-height: 100px; margin-top: 5px;">';
+            } else {
+                document.getElementById('preview-' + targetId).innerHTML = '<a href="' + e.target.result + '" target="_blank" class="btn btn-sm btn-info mt-2">View New File</a>';
+            }
         }
         reader.readAsDataURL(input.files[0]);
     }
