@@ -87,8 +87,17 @@ const BlurText: React.FC<BlurTextProps> = ({
 
 export default function PortfolioHero() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    api.getProfile().then((data: any) => {
+      if (data.resume_data) {
+        setResumeUrl(data.resume_data);
+      }
+    }).catch(console.error);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -107,14 +116,22 @@ export default function PortfolioHero() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
 
-  const menuItems = [
-    { label: "HOME", href: "#hero", highlight: true },
-    { label: "EDUCATION", href: "#education" },
-    { label: "SKILLS", href: "#skills" },
-    { label: "PROJECTS", href: "#projects" },
-    { label: "CERTIFICATIONS", href: "#certifications" },
-    { label: "CONTACT", href: "#contact" },
-  ];
+  const menuItems = useMemo(() => {
+    const items: { label: string; href: string; highlight?: boolean; external?: boolean }[] = [
+      { label: "HOME", href: "#hero", highlight: true },
+      { label: "EDUCATION", href: "#education" },
+      { label: "SKILLS", href: "#skills" },
+      { label: "PROJECTS", href: "#projects" },
+      { label: "CERTIFICATIONS", href: "#certifications" },
+      { label: "CONTACT", href: "#contact" },
+    ];
+
+    if (resumeUrl) {
+      items.push({ label: "RESUME", href: resumeUrl, external: true });
+    }
+
+    return items;
+  }, [resumeUrl]);
 
   return (
     <div 
