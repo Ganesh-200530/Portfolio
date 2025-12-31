@@ -142,6 +142,10 @@ def create_app() -> Flask:
 
   app.secret_key = os.getenv("SECRET_KEY", "supersecretkey")
 
+  @app.route('/')
+  def index():
+      return redirect(url_for('login'))
+
   def login_required(f):
       @wraps(f)
       def decorated_function(*args, **kwargs):
