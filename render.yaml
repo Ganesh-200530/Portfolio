@@ -1,0 +1,37 @@
+services:
+  # Backend Service
+  - type: web
+    name: portfolio-backend
+    root: backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn "app:create_app()"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: EMAIL_HOST
+        sync: false
+      - key: EMAIL_PORT
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASSWORD
+        sync: false
+      - key: EMAIL_TO
+        sync: false
+      - key: EMAIL_USE_TLS
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.11.9
+
+  # Frontend Static Site
+  - type: static
+    name: portfolio-frontend
+    root: frontend
+    env: static
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    routes:
+      - type: rewrite
+        source: /**
+        destination: /index.html

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { observeReveals } from '../utils/observer';
 import { api } from '../services/api';
-import { Award, BadgeCheck } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 interface CertificationItem {
   provider: string;

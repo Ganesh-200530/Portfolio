@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import PortfolioHero from '@/components/ui/portfolio-hero';
 import Education from './components/Education';
