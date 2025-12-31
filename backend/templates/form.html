@@ -9,8 +9,8 @@
             {% if col == 'message' or col == 'details' or col == 'summary' %}
                 <textarea name="{{ col }}" class="form-control" rows="3">{{ row[col] if row else '' }}</textarea>
             {% elif col == 'items' or col == 'tags' %}
-                <input type="text" name="{{ col }}" class="form-control" value="{{ row[col]|tojson if row and row[col] else '' }}" placeholder='["item1", "item2"]'>
-                <div class="form-text">Enter as JSON array e.g. ["React", "Python"]</div>
+                <input type="text" name="{{ col }}" class="form-control" value="{{ row[col]|join(', ') if row and row[col] else '' }}" placeholder="React, Python, JavaScript">
+                <div class="form-text">Enter items separated by commas</div>
             {% else %}
                 <input type="text" name="{{ col }}" class="form-control" value="{{ row[col] if row else '' }}">
             {% endif %}

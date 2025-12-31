@@ -217,11 +217,7 @@ def create_app() -> Flask:
               if col in request.form and col != 'id' and col != 'created_at':
                   val = request.form[col]
                   if col in ['items', 'tags']:
-                      try:
-                          val = json.loads(val) if val else None
-                      except json.JSONDecodeError:
-                          flash(f'Invalid JSON for {col}')
-                          return render_template('form.html', table_name=table_name, columns=columns, row=None, action="Add")
+                      val = [x.strip() for x in val.split(',') if x.strip()] if val else []
                   
                   if table.columns[col].type.python_type == int and val:
                       val = int(val)
@@ -257,11 +253,7 @@ def create_app() -> Flask:
               if col in request.form and col != 'id' and col != 'created_at':
                   val = request.form[col]
                   if col in ['items', 'tags']:
-                      try:
-                          val = json.loads(val) if val else None
-                      except json.JSONDecodeError:
-                          flash(f'Invalid JSON for {col}')
-                          return render_template('form.html', table_name=table_name, columns=columns, row=row, action="Edit")
+                      val = [x.strip() for x in val.split(',') if x.strip()] if val else []
                   
                   if table.columns[col].type.python_type == int and val:
                       val = int(val)
