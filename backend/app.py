@@ -235,13 +235,24 @@ def create_app() -> Flask:
                       if not val:
                           val = []
                       else:
+                          val_str = val.strip()
+                          # Auto-wrap in brackets if missing
+                          if not val_str.startswith('['):
+                              val_str = f"[{val_str}]"
+                          
                           try:
-                              val = json.loads(val)
+                              val = json.loads(val_str)
                           except Exception:
                               try:
-                                  val = json.loads(val.replace("'", '"'))
+                                  # Handle single quotes -> double quotes
+                                  val = json.loads(val_str.replace("'", '"'))
                               except Exception:
-                                  val = [{"name": x.strip(), "icon": ""} for x in val.split(',') if x.strip()]
+                                  # Only fall back to simple split if it doesn't look like complex data
+                                  if '{' not in val_str:
+                                      val = [{"name": x.strip(), "icon": ""} for x in val_str.strip('[]').split(',') if x.strip()]
+                                  else:
+                                      # If it looks like objects but failed parsing, return empty to avoid corruption
+                                      val = []
                   
                   if table.columns[col].type.python_type == int and val:
                       val = int(val)
@@ -282,13 +293,24 @@ def create_app() -> Flask:
                       if not val:
                           val = []
                       else:
+                          val_str = val.strip()
+                          # Auto-wrap in brackets if missing
+                          if not val_str.startswith('['):
+                              val_str = f"[{val_str}]"
+                          
                           try:
-                              val = json.loads(val)
+                              val = json.loads(val_str)
                           except Exception:
                               try:
-                                  val = json.loads(val.replace("'", '"'))
+                                  # Handle single quotes -> double quotes
+                                  val = json.loads(val_str.replace("'", '"'))
                               except Exception:
-                                  val = [{"name": x.strip(), "icon": ""} for x in val.split(',') if x.strip()]
+                                  # Only fall back to simple split if it doesn't look like complex data
+                                  if '{' not in val_str:
+                                      val = [{"name": x.strip(), "icon": ""} for x in val_str.strip('[]').split(',') if x.strip()]
+                                  else:
+                                      # If it looks like objects but failed parsing, return empty to avoid corruption
+                                      val = []
                   
                   if table.columns[col].type.python_type == int and val:
                       val = int(val)
