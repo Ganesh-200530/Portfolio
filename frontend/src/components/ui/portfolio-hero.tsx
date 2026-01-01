@@ -227,13 +227,13 @@ export default function PortfolioHero() {
         </div>
 
         {/* Tagline */}
-        <div className="mb-8 px-6 text-center max-w-4xl w-full">
+        <div className="mb-8 px-6 text-center max-w-5xl w-full flex justify-center">
             <BlurText 
                text="Aspiring Data Analyst | Uncovering patterns in data."
                delay={150}
                animateBy="words"
                direction="top"
-               className="text-[15px] sm:text-[18px] md:text-[20px] lg:text-[22px] text-center transition-colors duration-300 text-neutral-500 hover:text-white block w-full"
+               className="text-[15px] sm:text-[18px] md:text-[20px] lg:text-[22px] text-center transition-colors duration-300 text-neutral-500 hover:text-white justify-center"
                style={{ fontFamily: "'Antic', sans-serif" }}
             />
         </div>
