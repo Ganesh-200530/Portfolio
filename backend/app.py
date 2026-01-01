@@ -229,8 +229,19 @@ def create_app() -> Flask:
           for col in columns:
               if col in request.form and col != 'id' and col != 'created_at':
                   val = request.form[col]
-                  if col in ['items', 'tags']:
+                  if col == 'tags':
                       val = [x.strip() for x in val.split(',') if x.strip()] if val else []
+                  elif col == 'items':
+                      if not val:
+                          val = []
+                      else:
+                          try:
+                              val = json.loads(val)
+                          except Exception:
+                              try:
+                                  val = json.loads(val.replace("'", '"'))
+                              except Exception:
+                                  val = [{"name": x.strip(), "icon": ""} for x in val.split(',') if x.strip()]
                   
                   if table.columns[col].type.python_type == int and val:
                       val = int(val)
@@ -265,8 +276,19 @@ def create_app() -> Flask:
           for col in columns:
               if col in request.form and col != 'id' and col != 'created_at':
                   val = request.form[col]
-                  if col in ['items', 'tags']:
+                  if col == 'tags':
                       val = [x.strip() for x in val.split(',') if x.strip()] if val else []
+                  elif col == 'items':
+                      if not val:
+                          val = []
+                      else:
+                          try:
+                              val = json.loads(val)
+                          except Exception:
+                              try:
+                                  val = json.loads(val.replace("'", '"'))
+                              except Exception:
+                                  val = [{"name": x.strip(), "icon": ""} for x in val.split(',') if x.strip()]
                   
                   if table.columns[col].type.python_type == int and val:
                       val = int(val)
