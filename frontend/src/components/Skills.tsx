@@ -4,7 +4,7 @@ import { api } from '../services/api';
 import { 
   SiPython, SiPostgresql, SiJavascript, SiHtml5, 
   SiPandas, SiNumpy, SiScikitlearn, SiPlotly,
-  SiTableau, SiGit 
+  SiTableau, SiGit, SiR, SiSeaborn
 } from 'react-icons/si';
 import { RiFileExcel2Fill, RiBarChartFill } from 'react-icons/ri';
 import { VscVscode } from 'react-icons/vsc';
@@ -22,7 +22,7 @@ interface SkillCategory {
 const iconMap: Record<string, React.ElementType> = {
   SiPython, SiPostgresql, SiJavascript, SiHtml5,
   SiPandas, SiNumpy, SiScikitlearn, SiPlotly,
-  SiTableau, SiGit,
+  SiTableau, SiGit, SiR, SiSeaborn,
   RiFileExcel2Fill, RiBarChartFill, VscVscode
 };
 
@@ -61,17 +61,22 @@ const Skills: React.FC = () => {
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {item.items.map((skill, i) => {
+                      // Defensive check for malformed data
+                      if (!skill || typeof skill !== 'object') return null;
+                      
                       const IconComponent = iconMap[skill.icon];
                       return (
                         <div 
                           key={i} 
                           className="flex items-center gap-3 p-3 bg-card border border-border rounded-lg hover:border-accent transition-all duration-300 group"
                         >
-                          {IconComponent && (
+                          {IconComponent ? (
                             <IconComponent className="text-2xl text-muted group-hover:text-accent transition-colors" />
+                          ) : (
+                            <span className="w-6 h-6 block bg-white/10 rounded-full"></span>
                           )}
                           <span className="text-sm text-site-text font-mono group-hover:text-white transition-colors">
-                            {skill.name}
+                            {skill.name || String(skill)}
                           </span>
                         </div>
                       );
