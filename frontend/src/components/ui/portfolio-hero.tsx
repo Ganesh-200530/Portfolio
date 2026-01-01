@@ -77,7 +77,7 @@ const BlurText: React.FC<BlurTextProps> = ({
             transition: `all 0.5s ease-out ${i * delay}ms`,
           }}
         >
-          {segment}
+          {segment === ' ' ? '\u00A0' : segment}
           {animateBy === "words" && i < segments.length - 1 ? "\u00A0" : ""}
         </span>
       ))}
