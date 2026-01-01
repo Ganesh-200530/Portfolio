@@ -201,68 +201,57 @@ export default function PortfolioHero() {
       </header>
 
       {/* Hero Section */}
-      <div className="relative min-h-screen flex flex-col">
-        {/* Centered Main Name - Always Perfectly Centered */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4">
-          <div className="relative text-center">
-            <div>
-              <BlurText
-                text="M"
-                delay={100}
-                animateBy="letters"
-                direction="top"
-                className="font-bold text-[100px] sm:text-[140px] md:text-[180px] lg:text-[210px] leading-[0.75] tracking-tighter uppercase justify-center whitespace-nowrap"
-                style={{ color: "#C3E41D", fontFamily: "'Fira Code', monospace" }}
-              />
-            </div>
-            <div>
-              <BlurText
-                text="GANESH"
-                delay={100}
-                animateBy="letters"
-                direction="top"
-                className="font-bold text-[100px] sm:text-[140px] md:text-[180px] lg:text-[210px] leading-[0.75] tracking-tighter uppercase justify-center whitespace-nowrap"
-                style={{ color: "#C3E41D", fontFamily: "'Fira Code', monospace" }}
-              />
-            </div>
-
-            {/* Profile Picture */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="w-[65px] h-[110px] sm:w-[90px] sm:h-[152px] md:w-[110px] md:h-[185px] lg:w-[129px] lg:h-[218px] rounded-full overflow-hidden shadow-2xl transition-transform duration-300 hover:scale-110 cursor-pointer">
-                <img
-                  src="/Profile_P.jpeg"
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tagline - Proper Distance Below Hero */}
-        <div className="absolute bottom-16 sm:bottom-20 md:bottom-24 lg:bottom-32 xl:bottom-36 left-1/2 -translate-x-1/2 w-full px-6">
-          <div className="flex flex-col items-center gap-6">
-            <BlurText
-              text="Aspiring Data Analyst | Uncovering patterns in data."
-              delay={150}
-              animateBy="words"
-              direction="top"
-              className="text-[15px] sm:text-[18px] md:text-[20px] lg:text-[22px] text-center transition-colors duration-300 text-neutral-500 hover:text-white"
-              style={{ fontFamily: "'Antic', sans-serif" }}
+      <div className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-10">
+        
+        {/* Profile Picture - Above Name */}
+        <div className="mb-8 z-10">
+           <div className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] md:w-[180px] md:h-[180px] rounded-full overflow-hidden shadow-2xl border-4 border-[#C3E41D]/20 transition-transform duration-300 hover:scale-110 cursor-pointer">
+            <img
+              src="/Profile_P.jpeg"
+              alt="Profile"
+              className="w-full h-full object-cover"
             />
-            {resumeUrl && (
-              <a
-                href={resumeUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="px-6 py-2 rounded-full border border-[#C3E41D] text-[#C3E41D] hover:bg-[#C3E41D] hover:text-black transition-all duration-300 font-medium tracking-wide text-sm sm:text-base"
-                style={{ fontFamily: "'Fira Code', monospace" }}
-              >
-                RESUME
-              </a>
-            )}
           </div>
         </div>
+
+        {/* Name - Single Line */}
+        <div className="relative text-center mb-8 z-0 px-4">
+           <BlurText
+             text="M GANESH"
+             delay={100}
+             animateBy="letters"
+             direction="top"
+             className="font-bold text-[12vw] md:text-[140px] lg:text-[180px] leading-none tracking-tighter uppercase whitespace-nowrap"
+             style={{ color: "#C3E41D", fontFamily: "'Fira Code', monospace" }}
+           />
+        </div>
+
+        {/* Tagline */}
+        <div className="mb-8 px-6 text-center max-w-4xl w-full">
+            <BlurText 
+               text="Aspiring Data Analyst | Uncovering patterns in data."
+               delay={150}
+               animateBy="words"
+               direction="top"
+               className="text-[15px] sm:text-[18px] md:text-[20px] lg:text-[22px] text-center transition-colors duration-300 text-neutral-500 hover:text-white block w-full"
+               style={{ fontFamily: "'Antic', sans-serif" }}
+            />
+        </div>
+
+        {/* Resume Button */}
+        {resumeUrl && (
+          <div className="mb-16">
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="px-8 py-3 rounded-full border border-[#C3E41D] text-[#C3E41D] hover:bg-[#C3E41D] hover:text-black transition-all duration-300 font-medium tracking-wide text-sm sm:text-base"
+              style={{ fontFamily: "'Fira Code', monospace" }}
+            >
+              RESUME
+            </a>
+          </div>
+        )}
 
         {/* Scroll Indicator */}
         <button
