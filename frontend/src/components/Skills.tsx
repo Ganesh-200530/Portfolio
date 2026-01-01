@@ -4,7 +4,7 @@ import { api } from '../services/api';
 import { 
   SiPython, SiPostgresql, SiJavascript, SiHtml5, 
   SiPandas, SiNumpy, SiScikitlearn, SiPlotly,
-  SiTableau, SiGit, SiR
+  SiTableau, SiGit, SiR, SiMysql
 } from 'react-icons/si';
 import { RiFileExcel2Fill, RiBarChartFill } from 'react-icons/ri';
 import { VscVscode } from 'react-icons/vsc';
@@ -22,7 +22,7 @@ interface SkillCategory {
 const iconMap: Record<string, React.ElementType> = {
   SiPython, SiPostgresql, SiJavascript, SiHtml5,
   SiPandas, SiNumpy, SiScikitlearn, SiPlotly,
-  SiTableau, SiGit, SiR, 
+  SiTableau, SiGit, SiR, SiMysql,
   SiSeaborn: RiBarChartFill, // Fallback for Seaborn as it's not in react-icons/si
   RiFileExcel2Fill, RiBarChartFill, VscVscode
 };
