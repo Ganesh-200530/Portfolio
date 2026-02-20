@@ -1,47 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { observeReveals } from '../utils/observer';
+import { skillsData } from '../data/portfolio';
 import { api } from '../services/api';
 import { 
   SiPython, SiPostgresql, SiJavascript, SiHtml5, 
   SiPandas, SiNumpy, SiScikitlearn, SiPlotly,
-  SiTableau, SiGit, SiR, SiMysql
+  SiTableau, SiGit, SiR, SiMysql,
+  SiGoogleanalytics, SiGraphql, SiChartdotjs,
+  SiWolframmathematica, SiJupyter, SiGooglecolab,
+  SiGithub, SiCanva
 } from 'react-icons/si';
 import { RiFileExcel2Fill, RiBarChartFill } from 'react-icons/ri';
-import { VscVscode } from 'react-icons/vsc';
-
-interface SkillItem {
-  name: string;
-  icon: string;
-}
-
-interface SkillCategory {
-  category: string;
-  items: SkillItem[];
-}
+import { 
+  VscVscode, VscClearAll,
+  VscCircuitBoard, VscSymbolEvent, 
+  VscCommentDiscussion, VscSearch 
+} from 'react-icons/vsc';
 
 const iconMap: Record<string, React.ElementType> = {
   SiPython, SiPostgresql, SiJavascript, SiHtml5,
   SiPandas, SiNumpy, SiScikitlearn, SiPlotly,
   SiTableau, SiGit, SiR, SiMysql,
-  SiSeaborn: RiBarChartFill, // Fallback for Seaborn as it's not in react-icons/si
-  RiFileExcel2Fill, RiBarChartFill, VscVscode
+  SiGoogleanalytics, SiGraphql, SiChartdotjs,
+  SiWolframmathematica, SiJupyter, SiGooglecolab,
+  SiGithub, SiCanva,
+  SiSeaborn: RiBarChartFill, // Fallback for SiSeaborn
+  RiFileExcel2Fill, RiBarChartFill,
+  VscVscode, VscClearAll,
+  VscCircuitBoard, VscSymbolEvent, 
+  VscCommentDiscussion, VscSearch
 };
 
 const Skills: React.FC = () => {
-  const [skills, setSkills] = useState<SkillCategory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [skills, setSkills] = useState(skillsData);
 
   useEffect(() => {
+    // API fetch disabled to prioritize static resume data
+    /*
     api.getSkills()
       .then(data => {
-        setSkills(data);
-        setLoading(false);
-        setTimeout(observeReveals, 100);
+        if (data && data.length > 0) setSkills(data);
       })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
+      .catch(() => {});
+    */
+    setTimeout(observeReveals, 100);
   }, []);
 
   return (
@@ -49,9 +51,7 @@ const Skills: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 reveal">
         <div className="flex flex-col justify-center order-2 lg:order-1">
           <div className="space-y-8">
-            {loading ? (
-              <p className="text-muted font-mono">Loading skills...</p>
-            ) : skills.length === 0 ? (
+            {skills.length === 0 ? (
               <p className="text-muted font-mono">Skills coming soon.</p>
             ) : (
               skills.map((item, index) => (
@@ -62,14 +62,11 @@ const Skills: React.FC = () => {
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {item.items.map((skill, i) => {
-                      // Defensive check for malformed data
-                      if (!skill || typeof skill !== 'object') return null;
-                      
                       const IconComponent = iconMap[skill.icon];
                       return (
                         <div 
                           key={i} 
-                          className="flex items-center gap-3 p-3 bg-card border border-border rounded-lg hover:border-accent transition-all duration-300 group"
+                          className="flex items-center gap-3 p-3 bg-card/40 backdrop-blur-sm border border-border rounded-lg hover:border-accent hover:shadow-[0_0_15px_rgba(195,228,29,0.15)] hover:-translate-y-1 hover:bg-card transition-all duration-300 group cursor-default"
                         >
                           {IconComponent ? (
                             <IconComponent className="text-2xl text-muted group-hover:text-accent transition-colors" />
@@ -77,7 +74,7 @@ const Skills: React.FC = () => {
                             <span className="w-6 h-6 block bg-white/10 rounded-full"></span>
                           )}
                           <span className="text-sm text-site-text font-mono group-hover:text-white transition-colors">
-                            {skill.name || String(skill)}
+                            {skill.name}
                           </span>
                         </div>
                       );

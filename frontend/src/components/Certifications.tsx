@@ -1,30 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { observeReveals } from '../utils/observer';
+import { certificationsData } from '../data/portfolio';
 import { api } from '../services/api';
 import { Award } from 'lucide-react';
 
-interface CertificationItem {
-  provider: string;
-  name: string;
-  year: string;
-  details: string;
-}
-
 const Certifications: React.FC = () => {
-  const [certifications, setCertifications] = useState<CertificationItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [certifications, setCertifications] = useState(certificationsData);
 
   useEffect(() => {
+    // API fetch disabled to prioritize static resume data
+    /*
     api.getCertifications()
       .then(data => {
-        setCertifications(data);
-        setLoading(false);
-        setTimeout(observeReveals, 100);
+        if (data && data.length > 0) setCertifications(data);
       })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
+      .catch(() => {});
+    */
+    setTimeout(observeReveals, 100);
   }, []);
 
   return (
@@ -36,13 +28,11 @@ const Certifications: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="certifications-list">
-          {loading ? (
-            <p className="text-muted font-mono text-center col-span-full">Loading certifications...</p>
-          ) : certifications.length === 0 ? (
+          {certifications.length === 0 ? (
             <p className="text-muted font-mono text-center col-span-full">Certifications coming soon.</p>
           ) : (
             certifications.map((item, index) => (
-              <div key={index} className="group relative bg-card border-[3px] border-accent rounded-tr-[3rem] rounded-bl-[3rem] p-8 flex flex-col items-center text-center hover:shadow-[0_0_30px_rgba(195,228,29,0.2)] transition-all duration-300 hover:-translate-y-2 reveal">
+              <div key={index} className="group relative bg-card/80 backdrop-blur-sm border-[3px] border-accent/80 rounded-tr-[3rem] rounded-bl-[3rem] p-8 flex flex-col items-center text-center hover:shadow-[0_0_40px_rgba(195,228,29,0.25)] hover:border-accent transition-all duration-500 hover:-translate-y-2 reveal hover:bg-black/60">
                 
                 {/* Top Label */}
                 <div className="mb-4 w-full relative">

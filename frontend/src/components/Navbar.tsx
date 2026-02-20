@@ -56,7 +56,9 @@ const Navbar: React.FC = () => {
     <>
       {/* Desktop Navbar */}
       <header className="hidden md:flex fixed top-5 left-1/2 -translate-x-1/2 items-center gap-10 p-3 px-6 bg-card backdrop-blur-md border border-border rounded-full z-50 shadow-lg transition-all duration-300">
-        <div className="font-mono font-bold text-sm text-site-text tracking-tighter opacity-90">ganesh.exe</div>
+        <div className="w-8 h-8 rounded-lg overflow-hidden bg-black flex items-center justify-center border border-white/10">
+          <img src="/favicon.svg" alt="MG Logo" className="w-full h-full object-cover" />
+        </div>
         <nav ref={navRef} className="relative flex gap-6">
           {navLinks.map((section) => (
             <a

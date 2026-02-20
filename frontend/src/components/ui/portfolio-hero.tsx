@@ -74,8 +74,7 @@ const BlurText: React.FC<BlurTextProps> = ({
             filter: inView ? "blur(0px)" : "blur(10px)",
             opacity: inView ? 1 : 0,
             transform: inView ? "translateY(0)" : `translateY(${direction === "top" ? "-20px" : "20px"})`,
-            transition: `all 0.5s ease-out ${i * delay}ms`,
-          }}
+            transition: `all 0.5s ease-out ${i * delay}ms`,            ...(segment === ' ' ? { width: '0.25em' } : {}),          }}
         >
           {segment === ' ' ? '\u00A0' : segment}
           {animateBy === "words" && i < segments.length - 1 ? "\u00A0" : ""}
@@ -205,7 +204,7 @@ export default function PortfolioHero() {
         
         {/* Profile Picture - Above Name */}
         <div className="mb-8 z-10">
-           <div className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] md:w-[180px] md:h-[180px] rounded-full overflow-hidden shadow-2xl border-4 border-[#C3E41D]/20 transition-transform duration-300 hover:scale-110 cursor-pointer">
+           <div className="w-[120px] h-[160px] sm:w-[150px] sm:h-[200px] md:w-[180px] md:h-[240px] rounded-full overflow-hidden shadow-2xl border-4 border-[#C3E41D]/20 transition-transform duration-300 hover:scale-110 cursor-pointer">
             <img
               src="/Profile_P.jpeg"
               alt="Profile"
