@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observeReveals } from '../utils/observer';
 import { projectsData } from '../data/portfolio';
-import { api } from '../services/api';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
 
 const projectImages = [
@@ -13,7 +12,7 @@ const projectImages = [
 ];
 
 const Projects: React.FC = () => {
-  const [projects, setProjects] = useState(projectsData);
+  const [projects] = useState<any[]>(projectsData);
 
   useEffect(() => {
     // API fetch disabled to prioritize static resume data
@@ -62,7 +61,7 @@ const Projects: React.FC = () => {
                           {item.title || "Untitled"}
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {tags.map((tag, i) => (
+                          {tags.map((tag: string, i: number) => (
                             <div
                               key={i}
                               className="px-3 py-1 rounded-full bg-accent/5 border border-accent/20 backdrop-blur-sm"
@@ -103,7 +102,7 @@ const Projects: React.FC = () => {
                                 rel="noreferrer" 
                                 className="px-8 py-3 border border-white/20 bg-white/5 text-white font-bold rounded-full hover:bg-white hover:text-black hover:scale-105 transition-all duration-200 font-mono text-sm uppercase tracking-wider backdrop-blur-sm"
                               >
-                                View Code
+                                GitHub
                               </a>
                             )}
                           </div>

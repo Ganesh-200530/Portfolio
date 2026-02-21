@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observeReveals } from '../utils/observer';
 import { educationData } from '../data/portfolio';
-import { api } from '../services/api';
 
 interface EducationItem {
   degree: string;
@@ -13,7 +12,7 @@ interface EducationItem {
 }
 
 const Education: React.FC = () => {
-  const [education, setEducation] = useState<EducationItem[]>(educationData);
+  const [education] = useState<EducationItem[]>(educationData);
 
   useEffect(() => {
     // API fetch disabled to prioritize static resume data
@@ -58,7 +57,11 @@ const Education: React.FC = () => {
               <p className="text-muted">-- No records found</p>
             ) : (
               education.map((item, index) => (
-                <div key={index} className="group reveal">
+                <div 
+                  key={index} 
+                  style={{ transitionDelay: `${index * 200}ms` }}
+                  className="group reveal"
+                >
                   <div className="flex gap-2 text-muted/50 select-none">
                     <span>{(index + 1).toString().padStart(2, '0')}</span>
                     <span className="text-accent">SELECT</span>

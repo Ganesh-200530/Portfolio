@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { observeReveals } from '../utils/observer';
 import { skillsData } from '../data/portfolio';
-import { api } from '../services/api';
-import { 
-  SiPython, SiPostgresql, SiJavascript, SiHtml5, 
+import {
+  SiPython, SiPostgresql, SiJavascript, SiHtml5,
   SiPandas, SiNumpy, SiScikitlearn, SiPlotly,
   SiTableau, SiGit, SiR, SiMysql,
   SiGoogleanalytics, SiGraphql, SiChartdotjs,
@@ -32,17 +31,9 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 const Skills: React.FC = () => {
-  const [skills, setSkills] = useState(skillsData);
+  const [skills] = useState(skillsData);
 
   useEffect(() => {
-    // API fetch disabled to prioritize static resume data
-    /*
-    api.getSkills()
-      .then(data => {
-        if (data && data.length > 0) setSkills(data);
-      })
-      .catch(() => {});
-    */
     setTimeout(observeReveals, 100);
   }, []);
 
@@ -62,11 +53,16 @@ const Skills: React.FC = () => {
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {item.items.map((skill, i) => {
-                      const IconComponent = iconMap[skill.icon];
+                      // Attempt to resolve icon by name or icon property
+                      const key = skill.icon || skill.name; 
+                      // Try to find it in the map, otherwise fallback
+                      const IconComponent = (iconMap as any)[key] || VscSymbolEvent;
+                      
                       return (
                         <div 
                           key={i} 
-                          className="flex items-center gap-3 p-3 bg-card/40 backdrop-blur-sm border border-border rounded-lg hover:border-accent hover:shadow-[0_0_15px_rgba(195,228,29,0.15)] hover:-translate-y-1 hover:bg-card transition-all duration-300 group cursor-default"
+                          style={{ transitionDelay: `${i * 50}ms` }}
+                          className="reveal flex items-center gap-3 p-3 bg-card/40 backdrop-blur-sm border border-border rounded-lg hover:border-accent hover:shadow-[0_0_15px_rgba(195,228,29,0.15)] hover:-translate-y-1 hover:bg-card transition-all duration-300 group cursor-default"
                         >
                           {IconComponent ? (
                             <IconComponent className="text-2xl text-muted group-hover:text-accent transition-colors" />

@@ -1,5 +1,20 @@
 
+
+export const profileData = {
+  name: "Your Name",
+  role: "Data Scientist",
+  resume_url: "/resume.pdf", // Ensure resume.pdf is in the public folder
+  about: "Data Scientist with a passion for uncovering insights from complex datasets."
+};
+
+export const socialData = [
+  { platform: "GitHub", url: "https://github.com/yourusername", label: "GitHub" }, // Used for project code links
+  { platform: "LinkedIn", url: "https://linkedin.com/in/yourusername", label: "LinkedIn" },
+  { platform: "Email", url: "mailto:mamidiganesh05@gmail.com", label: "Email" }
+];
+
 export const educationData = [
+
   {
     institution: "Vel Tech Rangarajan Dr.Sagunthala R&D Institute of Science and Technology",
     degree: "Bachelor of Engineering - Computer Science (Data Science)",
@@ -85,40 +100,43 @@ export const projectsData = [
     title: "SQL Data Warehouse & ETL Pipeline",
     summary: "Designed a multi-layer Data Warehouse (Bronze, Silver, Gold) and built automated ETL pipelines with Star Schema models.",
     tags: ["SQL Server", "T-SQL", "ETL", "Data Warehousing"],
-    live_url: "#",
-    code_url: "#",
+    image: "/projects/SQL_DW_DASHBOARD.png",
+    // live_url: "#",
+    // code_url: "#",
     order_index: 1
   },
   {
     title: "Sales Performance & Customer Insights",
     summary: "Analyzed sales trends and customer behavior using SQL/Python, calculating KPIs and building interactive Power BI dashboards.",
     tags: ["SQL", "Python", "Power BI", "Excel"],
-    live_url: "#",
-    code_url: "#",
+    image: "/projects/sales-dashboard.png",
+    // live_url: "#",
+    // code_url: "#",
     order_index: 2
   },
   {
     title: "HR Analytics Dashboard",
     summary: "Built an interactive Tableau dashboard to track workforce trends with a custom UI designed in Figma.",
     tags: ["Tableau", "Figma", "Data Visualization"],
-    live_url: "#",
-    code_url: "#",
+    // live_url: "#",
+    // code_url: "#",
     order_index: 3
   },
   {
     title: "Skin Disease Detection Using ML",
     summary: "Built and deployed a CNN-based model to classify skin diseases from image data using TensorFlow/Keras and Flask.",
     tags: ["Python", "CNN", "TensorFlow", "Flask"],
-    live_url: "#",
-    code_url: "#",
+    image: "/projects/SKIN_DISEASE_DETECTION.png",
+    // live_url: "#",
+    // code_url: "#",
     order_index: 4
   },
   {
     title: "Sentiment Analysis Using ML",
     summary: "Developed a sentiment analysis model using NLP and scikit-learn to classify text data into positive, negative, and neutral sentiments.",
     tags: ["Python", "NLP", "Scikit-learn", "ML"],
-    live_url: "#",
-    code_url: "#",
+    // live_url: "#",
+    // code_url: "#",
     order_index: 5
   }
 ];
@@ -129,6 +147,7 @@ export const certificationsData = [
     provider: "Google",
     year: "2023",
     details: "Comprehensive curriculum covering data cleaning, analysis, and visualization.",
+    // link: "/certificates/google-analytics.pdf",
     order_index: 1
   },
   {
@@ -136,6 +155,7 @@ export const certificationsData = [
     provider: "Coursera",
     year: "2022",
     details: "In-depth course on SQL queries, joins, and database management.",
+    // link: "https://www.coursera.org/account/accomplishments/verify/YOUR_ID",
     order_index: 2
   },
   {
@@ -143,6 +163,7 @@ export const certificationsData = [
     provider: "Wipro Talent Next",
     year: "2025",
     details: "",
+    link: "/certificates/wipro-talent-next.pdf" ,
     order_index: 3
   }
 ];

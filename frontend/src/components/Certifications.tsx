@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { observeReveals } from '../utils/observer';
 import { certificationsData } from '../data/portfolio';
-import { api } from '../services/api';
 import { Award } from 'lucide-react';
 
 const Certifications: React.FC = () => {
-  const [certifications, setCertifications] = useState(certificationsData);
+  const [certifications] = useState(certificationsData);
 
   useEffect(() => {
     // API fetch disabled to prioritize static resume data
@@ -32,7 +31,11 @@ const Certifications: React.FC = () => {
             <p className="text-muted font-mono text-center col-span-full">Certifications coming soon.</p>
           ) : (
             certifications.map((item, index) => (
-              <div key={index} className="group relative bg-card/80 backdrop-blur-sm border-[3px] border-accent/80 rounded-tr-[3rem] rounded-bl-[3rem] p-8 flex flex-col items-center text-center hover:shadow-[0_0_40px_rgba(195,228,29,0.25)] hover:border-accent transition-all duration-500 hover:-translate-y-2 reveal hover:bg-black/60">
+              <div 
+                key={index}
+                style={{ transitionDelay: `${index * 150}ms` }}
+                className="group relative bg-card/80 backdrop-blur-sm border-[3px] border-accent/80 rounded-tr-[3rem] rounded-bl-[3rem] p-8 flex flex-col items-center text-center hover:shadow-[0_0_40px_rgba(195,228,29,0.25)] hover:border-accent transition-all duration-500 hover:-translate-y-2 reveal hover:bg-black/60"
+              >
                 
                 {/* Top Label */}
                 <div className="mb-4 w-full relative">
@@ -59,10 +62,27 @@ const Certifications: React.FC = () => {
 
                 {/* Bottom Provider Area */}
                 <div className="mt-auto flex flex-col items-center gap-2">
-                   <div className="text-accent">
-                     <Award size={32} strokeWidth={1.5} />
-                   </div>
-                   <span className="text-sm font-mono text-muted uppercase tracking-wider">{item.provider}</span>
+                   {(item as any).link ? (
+                     <a 
+                       href={(item as any).link} 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       className="text-accent hover:text-white transition-colors cursor-pointer flex flex-col items-center group/link"
+                       title="View Certificate"
+                     >
+                       <Award size={32} strokeWidth={1.5} className="group-hover/link:scale-110 transition-transform" />
+                       <span className="text-sm font-mono text-muted uppercase tracking-wider mt-2 group-hover/link:text-white decoration-accent underline-offset-4 group-hover/link:underline">
+                         View {item.provider}
+                       </span>
+                     </a>
+                   ) : (
+                     <>
+                       <div className="text-accent">
+                         <Award size={32} strokeWidth={1.5} />
+                       </div>
+                       <span className="text-sm font-mono text-muted uppercase tracking-wider">{item.provider}</span>
+                     </>
+                   )}
                 </div>
                 
               </div>
