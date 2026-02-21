@@ -8,8 +8,8 @@ export const profileData = {
 };
 
 export const socialData = [
-  { platform: "GitHub", url: "https://github.com/yourusername", label: "GitHub" }, // Used for project code links
-  { platform: "LinkedIn", url: "https://linkedin.com/in/yourusername", label: "LinkedIn" },
+  { platform: "GitHub", url: "https://github.com/Ganesh-200530", label: "GitHub" }, // Used for project code links
+  { platform: "LinkedIn", url: "https://www.linkedin.com/in/m-ganesh-94bba929a/overlay/about-this-profile/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3B7vgPO0Z5QpGF6M8TGp6NNA%3D%3D", label: "LinkedIn" },
   { platform: "Email", url: "mailto:mamidiganesh05@gmail.com", label: "Email" }
 ];
 
