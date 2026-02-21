@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { api } from '../services/api';
 
 const Contact: React.FC = () => {
   const [status, setStatus] = useState('');
@@ -7,15 +6,27 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('Sending...');
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
     try {
-      await api.sendMessage(data);
-      setStatus('Message sent successfully!');
-      (e.target as HTMLFormElement).reset();
-    } catch (err: any) {
-      setStatus(`Error: ${err.message || 'Failed to send'}`);
+      const response = await fetch("https://formspree.io/f/xlgwpgkq", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setStatus('Message sent successfully!');
+        form.reset();
+      } else {
+        setStatus("Oops! There was a problem submitting your form");
+      }
+    } catch (err) {
+      setStatus('Error: Failed to send message.');
     }
   };
 
@@ -34,7 +45,7 @@ const Contact: React.FC = () => {
               <div className="w-10 h-10 rounded-full bg-transparent border border-border flex items-center justify-center text-accent">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
               </div>
-              <span className="font-mono">ganesh@example.com</span>
+              <span className="font-mono">mamidiganesh05@gmail.com</span>
             </div>
             <div className="flex items-center gap-4 text-muted">
               <div className="w-10 h-10 rounded-full bg-transparent border border-border flex items-center justify-center text-accent">
